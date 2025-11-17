@@ -1,12 +1,25 @@
 import React, { useState } from "react";
+import API from "../api/api";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    alert(`Email: ${email}\nPassword: ${password}`);
+
+    try {
+      const response = await API.post("/api/users/login", {
+        email,
+        password
+      });
+
+      alert("Login Successful!");
+      console.log(response.data);
+
+    } catch (error) {
+      alert("Invalid Email or Password");
+    }
   };
 
   return (

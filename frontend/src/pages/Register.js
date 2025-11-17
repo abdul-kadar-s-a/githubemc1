@@ -1,13 +1,28 @@
 import React, { useState } from "react";
+import API from "../api/api";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    alert(`Registered: ${name}, ${email}`);
+
+    try {
+      const response = await API.post("/api/users/register", {
+        name,
+        email,
+        password
+      });
+
+      alert("Registration Successful!");
+      console.log(response.data);
+
+    } catch (error) {
+      alert("Registration Failed");
+      console.error(error);
+    }
   };
 
   return (
